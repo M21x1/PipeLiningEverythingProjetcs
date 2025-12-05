@@ -55,3 +55,18 @@ def cleanse_student_table(df):
     df['time_spent_hrs'] = np.where(df['time_spent_hrs'].isnull(), 0, df['time_spent_hrs'])
 
     return(df, missing_data)
+
+def cleanse_career_path(df):
+    """
+    Cleanse the `cademycode_courses` table according to the discoveries made in the writeup
+
+    Parameters:
+        df (DataFrame): `cademycode_courses` table from `cademycode.db`
+    Returns:
+        df (DataFrame): cleaned version of the input table
+    """
+    not_applicable = {'career_path_id': 0,
+                      'career_path_name': 'not applicable',
+                      'hours_to_complete': 0}
+    df.loc[len(df)] = not_applicable
+    return(df.drop_duplicates())
