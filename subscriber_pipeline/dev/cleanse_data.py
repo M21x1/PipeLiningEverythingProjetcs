@@ -7,7 +7,7 @@ import logging
 
 pd.options.mode.chained_assignment = None  # Disable SettingWithCopyWarning
 
-logging.basicConfig(filename="./dev/cleanse_db.log",
+logging.basicConfig(filename="./cleanse_db.log", # "./dev/cleanse_db.log"
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
                     filemode='w',
                     level=logging.DEBUG,
@@ -196,14 +196,14 @@ def main():
     logger.info("Start Log")
 
     # Check for current version and calculate next version for changelog
-    with open('./dev/changelog.md') as f:
+    with open('changelog.md') as f: # './dev/changelog.md'
         lines = f.readlines()
     next_ver = int(lines[0].split('.')[2][0]) + 1
 
     # Connect to the dev database and read in the three tables
-    con = sqlite3.connect('./dev/cademycode.db')
+    con = sqlite3.connect('./cademycode.db') # ./dev/cademycode.db
     students = pd.read_sql_query("SELECT * FROM cademycode_students", con)
-    career_paths = pd.read_sql_query("SELECT * FROM cademycode_career_paths", con)
+    career_paths = pd.read_sql_query("SELECT * FROM cademycode_courses", con)
     student_jobs = pd.read_sql_query("SELECT * FROM cademycode_student_jobs", con)
     con.close()
 
@@ -231,7 +231,7 @@ def main():
     
     # Upsert new incomplete data if there are any
     if len(new_missing_data) > 0:
-        sqlite_connection = sqlite3.connect('./dev/cademycode_cleansed.db')
+        sqlite_connection = sqlite3.connect('./cademycode_cleansed.db') # ./dev/cademycode_cleansed.db
         missing_data.to_sql('incomplete_data', sqlite_connection, if_exists='append', index=False)
         sqlite_connection.close()
     
@@ -262,14 +262,14 @@ def main():
         ########################
 
         # Upsert new cleaned data to cademycode_cleansed.db
-        con = create_engine('sqlite:///./dev/cademycode_cleansed.db', echo=True)
+        con = create_engine('sqlite:///./cademycode_cleansed.db', echo=True) # sqlite:///./dev/cademycode_cleansed.db
         sqlite_connection = con.connect()
         df_clean.to_sql('cademycode_aggregated', sqlite_connection, if_exists='append', index=False)
         clean_db = pd.read_sql_query("SELECT * FROM cademycode_aggregated", con)
         sqlite_connection.close()
 
         # Write new cleaned data to a csv file
-        clean_db.to_csv('./dev/cademycode_cleansed.csv')
+        clean_db.to_csv('./cademycode_cleansed.csv') # ./dev/cademycode_cleansed.csv
 
         # Create new automatic changelog entry
         new_lines = [
@@ -282,7 +282,7 @@ def main():
         w_lines = ''.join(new_lines + lines)
 
         # Update the changelog
-        with open('./dev/changelog.md', 'w') as f:
+        with open('./changelog.md', 'w') as f: # ./dev/changelog.md
             for line in w_lines:
                 f.write(line)
     else:
