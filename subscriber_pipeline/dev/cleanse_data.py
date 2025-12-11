@@ -201,7 +201,7 @@ def main():
     next_ver = int(lines[0].split('.')[2][0]) + 1
 
     # Connect to the dev database and read in the three tables
-    con = sqlite3.connect('./subscriber_pipeline/dev/cademycode.db') # ./dev/cademycode.db
+    con = sqlite3.connect('./subscriber_pipeline/dev/cademycode_updated.db') # ./dev/cademycode.db # cademycode.db
     students = pd.read_sql_query("SELECT * FROM cademycode_students", con)
     career_paths = pd.read_sql_query("SELECT * FROM cademycode_courses", con)
     student_jobs = pd.read_sql_query("SELECT * FROM cademycode_student_jobs", con)
