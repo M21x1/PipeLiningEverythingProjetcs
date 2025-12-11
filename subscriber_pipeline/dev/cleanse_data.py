@@ -198,7 +198,7 @@ def main():
     # Check for current version and calculate next version for changelog
     with open('./subscriber_pipeline/dev/changelog.md') as f: # './dev/changelog.md'
         lines = f.readlines()
-    next_ver = int(lines[0].split('.')[2][0]) + 1
+    next_ver = int(lines[0].split('.')[1]) + 1 # int(lines[0].split('.')[2][0])
 
     # Connect to the dev database and read in the three tables
     con = sqlite3.connect('./subscriber_pipeline/dev/cademycode_updated.db') # ./dev/cademycode.db # cademycode.db
