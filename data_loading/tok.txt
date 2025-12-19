@@ -1,1 +1,0 @@
-ACCESS_TOKEN = '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' # I generated this on GitHub
