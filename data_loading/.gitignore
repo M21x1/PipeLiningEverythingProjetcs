@@ -4,3 +4,4 @@
 *.duckdb
 *.db
 *.sqlite
+github_events.duckdb
