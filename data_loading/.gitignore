@@ -1,1 +1,6 @@
 .env
+
+# Databases
+*.duckdb
+*.db
+*.sqlite
